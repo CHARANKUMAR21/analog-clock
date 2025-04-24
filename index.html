@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: blue;
+        margin: 0;
+      }
+      .clock {
+        width: 500px;
+        height: 500px;
+        border: 5px solid #b10b0b;
+        border-radius: 50%;
+        position: relative;
+        background-image: url(./568606.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        box-shadow: 0 0 30px rgba(39, 15, 157, 0.9);
+      }
+      .hand {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        border-radius: 20px;
+        transform-origin: bottom;
+        background: white;
+      }
+      .hour {
+        height: 25%;
+        width: 8px;
+        background: #260202;
+      }
+
+      .minute {
+        height: 30%;
+        width: 8px;
+        background: black;
+      }
+
+      .second {
+        height: 35%;
+        width: 4px;
+        background: red;
+      }
+
+      .center-dot {
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .numbers {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: -10px;
+        left: -5px;
+      }
+      .numbers span {
+        position: absolute;
+        color: black;
+        font-size: 40px;
+        font-weight: bold;
+        transform: rotate(calc(30deg * var(--n))) translateY(-220px)
+          rotate(calc(-30deg * var(--n)));
+        left: 49.5%;
+        top: 48%;
+        transform-origin: center;
+      }
+      @media screen and (max-width: 400px) {
+        body {
+          background-color: rgb(120, 214, 153);
+        }
+        .clock {
+          width: 300px;
+          height: 300px;
+        }
+
+        .numbers span {
+          transform: rotate(calc(30deg * var(--n))) translateY(-130px)
+            rotate(calc(-30deg * var(--n)));
+          display: flex;
+          font-size: 30px;
+          left: 50%;
+          top: 49%;
+        }
+      }
+
+      @media screen and (min-width: 400px) {
+        body {
+          background-color: rgb(20, 148, 157);
+        }
+        .numbers span {
+          transform: rotate(calc(30deg * var(--n))) translateY(-170px)
+            rotate(calc(-30deg * var(--n)));
+        }
+        .clock {
+          width: 400px;
+          height: 400px;
+          border: 5px solid #b10b0b;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="hand hour" id="hour"></div>
+      <div class="hand minute" id="minute"></div>
+      <div class="hand second" id="second"></div>
+      <div class="center-dot"></div>
+    </div>
+    <div class="numbers">
+      <span style="--n: 1">1</span>
+      <span style="--n: 2">2</span>
+      <span style="--n: 3">3</span>
+      <span style="--n: 4">4</span>
+      <span style="--n: 5">5</span>
+      <span style="--n: 6">6</span>
+      <span style="--n: 7">7</span>
+      <span style="--n: 8">8</span>
+      <span style="--n: 9">9</span>
+      <span style="--n: 10">10</span>
+      <span style="--n: 11">11</span>
+      <span style="--n: 12">12</span>
+    </div>
+
+    <script>
+      let hourHand = document.getElementById("hour");
+      let minuteHand = document.getElementById("minute");
+      let secondHand = document.getElementById("second");
+
+      function updateClock() {
+        let now = new Date();
+
+        let seconds = now.getSeconds();
+        let minutes = now.getMinutes();
+        let hours = now.getHours();
+
+        let secondDeg = seconds * 6;
+        let minuteDeg = minutes * 6 + seconds * 0.1;
+        let hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+        secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+        minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+        hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      }
+
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>
